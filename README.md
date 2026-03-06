@@ -2,7 +2,7 @@
 
 ![Cyberpunk Aesthetic](https://img.shields.io/badge/Style-Cyberpunk-00f2ff)
 ![Manim](https://img.shields.io/badge/Render-Manim_CE-bc13fe)
-![No LaTeX](https://img.shields.io/badge/LaTeX-Not_Required-39ff14)
+![LaTeX](https://img.shields.io/badge/LaTeX-Required-39ff14)
 
 ## 📖 简介
 
@@ -23,9 +23,9 @@
     6.  **位置编码**：正弦波与输入向量的叠加。
     7.  **Transformer Block**：残差连接与层归一化的堆叠结构。
 
-*   **⚡ 零 LaTeX 依赖**
-    *   代码经过专门优化，使用标准 `Text` 类替代 `MathTex`。
-    *   **无需安装** MiKTeX 或 TeX Live 即可在 Windows/Mac/Linux 上直接渲染数学公式。
+*   **⚡ 专业公式渲染**
+    *   使用 `MathTex` 类呈现高质量 LaTeX 数学公式。
+    *   精确展示 Transformer 复杂的数学原理。
 
 *   **💻 Web 交互界面**
     *   提供现代化的 React 界面，方便查看、复制代码及阅读使用指南。
@@ -34,7 +34,7 @@
 
 ### 1. 环境准备
 
-确保本地已安装 Python (3.8+) 和 FFmpeg。
+确保本地已安装 Python (3.8+)、FFmpeg 和 LaTeX 环境 (如 MiKTeX 或 TeX Live)。
 
 安装 Manim 社区版：
 ```bash

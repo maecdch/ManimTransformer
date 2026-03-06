@@ -13,7 +13,7 @@ GRID_COLOR = "#1f1f1f"
 # Text Styles
 TITLE_FONT_SIZE = 32
 SUBTITLE_FONT_SIZE = 20
-FORMULA_FONT_SIZE = 24
+FORMULA_FONT_SIZE = 36
 
 class CyberGrid(VGroup):
     """Custom Cyberpunk Background Grid"""
@@ -84,69 +84,67 @@ class TransformerFlow(Scene):
                 "step_number": 1,
                 "title_zh": "序列的瓶颈：RNN的局限",
                 "title_en": "The Sequence Bottleneck: RNN's Limitations",
-                "formula": "h_t = f(h_t-1, x_t)",
+                "formula": r"h_t = f(h_{t-1}, x_t)",
                 "type": "rnn"
             },
             {
                 "step_number": 2,
                 "title_zh": "自注意力机制：全局洞察力",
                 "title_en": "Self-Attention: Global Insight",
-                "formula": "Attention(Q, K, V)",
+                "formula": r"\text{Attention}(Q, K, V)",
                 "type": "self_attention"
             },
             {
                 "step_number": 3,
                 "title_zh": "QKV投影：构建核心",
                 "title_en": "QKV Projection: Building the Core",
-                "formula": "Q = X W_Q, K = X W_K, V = X W_V",
+                "formula": r"Q = X W_Q, K = X W_K, V = X W_V",
                 "type": "qkv"
             },
             {
                 "step_number": 4,
                 "title_zh": "点积缩放注意力：权重与聚合",
                 "title_en": "Scaled Dot-Product Attention",
-                "formula": "Attention(Q, K, V) = softmax(QK^T / √d_k)V",
+                "formula": r"\text{Attention}(Q, K, V) = \text{softmax}(\frac{QK^T}{\sqrt{d_k}})V",
                 "type": "scaled_attention"
             },
             {
                 "step_number": 5,
                 "title_zh": "多头注意力：捕捉多维度信息",
                 "title_en": "Multi-Head Attention",
-                "formula": "MultiHead(Q, K, V) = Concat(head_1, ..., head_h)W^O",
+                "formula": r"\text{MultiHead}(Q, K, V) = \text{Concat}(\text{head}_1, ..., \text{head}_h)W^O",
                 "type": "multi_head"
             },
             {
                 "step_number": 6,
                 "title_zh": "位置编码：注入序列秩序",
                 "title_en": "Positional Encoding",
-                "formula": "PE(pos, 2i) = sin(pos / 10000^(2i/d_model))",
+                "formula": r"PE_{(pos, 2i)} = \sin(pos / 10000^{2i/d_{model}})",
                 "type": "positional_encoding"
             },
             {
                 "step_number": 7,
                 "title_zh": "Transformer块：构建深层网络",
                 "title_en": "Transformer Block",
-                "formula": "LayerNorm(x + Sublayer(x))",
+                "formula": r"\text{LayerNorm}(x + \text{Sublayer}(x))",
                 "type": "transformer_block"
             },
             {
                 "step_number": 8,
                 "title_zh": "能力边界：输出与未来展望",
                 "title_en": "Capability Frontier",
-                "formula": "AI -> ∞",
+                "formula": r"\text{AI} \rightarrow \infty",
                 "type": "future"
             }
         ]
 
     def play_step(self, step):
         # --- Title Section ---
-        # Use Text instead of MathTex to avoid LaTeX dependency
         title_zh = Text(step["title_zh"], font_size=TITLE_FONT_SIZE, color=NEON_BLUE)
         title_en = Text(step["title_en"], font_size=SUBTITLE_FONT_SIZE, color=WHITE).set_opacity(0.8)
         
         title_group = VGroup(title_zh, title_en).arrange(DOWN, aligned_edge=LEFT).to_corner(UL)
         
-        # Use BackgroundRectangle instead of BackgroundRect
         bg_rect = BackgroundRectangle(title_group, color=BLACK, fill_opacity=0.7, buff=0.2)
         
         self.play(FadeIn(bg_rect), Write(title_group), run_time=1)
@@ -154,8 +152,8 @@ class TransformerFlow(Scene):
 
         # --- Formula Section ---
         if step["formula"]:
-            # Use Text instead of MathTex
-            formula = Text(step["formula"], color=FLUORESCENT_GREEN, font_size=FORMULA_FONT_SIZE)
+            # Use MathTex for LaTeX formulas
+            formula = MathTex(step["formula"], color=FLUORESCENT_GREEN, font_size=FORMULA_FONT_SIZE)
             formula.to_edge(DOWN, buff=1)
             # Cyber scan effect
             scan_line = Line(formula.get_left(), formula.get_left(), color=NEON_BLUE)
@@ -262,7 +260,7 @@ class TransformerFlow(Scene):
             for _ in range(3)
         ]).arrange(DOWN, buff=0.5).move_to(ORIGIN)
         weight_labels = VGroup(*[
-            Text(t, font_size=20, color=FLUORESCENT_GREEN).move_to(w)
+            MathTex(t, font_size=24, color=FLUORESCENT_GREEN).move_to(w)
             for w, t in zip(weights, ["W_Q", "W_K", "W_V"])
         ])
         
@@ -271,7 +269,7 @@ class TransformerFlow(Scene):
             for _ in range(3)
         ]).arrange(DOWN, buff=0.5).move_to(RIGHT * 4)
         output_labels = VGroup(*[
-            Text(t, font_size=20, color=CYBER_PURPLE).move_to(o)
+            MathTex(t, font_size=24, color=CYBER_PURPLE).move_to(o)
             for o, t in zip(outputs, ["Q", "K", "V"])
         ])
         
@@ -304,8 +302,8 @@ class TransformerFlow(Scene):
         q = Square(side_length=1, color=CYBER_PURPLE, fill_opacity=0.5).move_to(LEFT * 5)
         k = Square(side_length=1, color=CYBER_PURPLE, fill_opacity=0.5).move_to(LEFT * 3)
         
-        # Operation symbols - Use Text for symbols to avoid LaTeX
-        times = Text("×", font_size=50).move_to(LEFT * 4)
+        # Operation symbols
+        times = MathTex(r"\times", font_size=50).move_to(LEFT * 4)
         
         # Result of QK
         score = Rectangle(width=1.5, height=1, color=WHITE).move_to(LEFT * 1)
